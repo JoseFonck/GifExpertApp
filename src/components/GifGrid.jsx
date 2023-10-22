@@ -1,31 +1,33 @@
 import { useState, useEffect } from "react";
+
 import { getGif } from "../helpers/getGifs";
+import { GifItem } from "./GifItem";
 
-export const GifGrid = ({category}) => {
-  
-    const [images, setImages] = useState([]);
+export const GifGrid = ({ category }) => {
+  const [images, setImages] = useState([]);
 
-    const getImages = async() => {
-        const newImages = await getGif(category)
-        setImages(newImages)
-    }
+  const getImages = async () => {
+    const newImages = await getGif(category);
+    setImages(newImages);
+  };
 
-    useEffect(()=>{
-        getImages()
-    },[category])
+  useEffect(() => {
+    getImages();
+  }, [category]);
 
-    return(
-        <>
-            <h3>{category}</h3>
-            <div>
-                {images.map( ({id, title, img}) => (
-                    <>
-                        <li key={id}>{title}</li>
-                        <img key={id} src={img} alt="GIF" />
-                    </>
-                ))}
-            </div>
-        </>
-    )
-
-}
+  return (
+    <>
+      <h3>{category}</h3>
+      <div className="card-grid">
+        {images.map((image) => (
+          <GifItem
+            key={images.id}
+            {...image}
+            // title={image.title}
+            // img={image.img}
+          />
+        ))}
+      </div>
+    </>
+  );
+};
